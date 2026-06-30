@@ -412,6 +412,7 @@
       width: 100%;
       min-height: 58px;
       border: 0;
+      border-top: 1px solid #dce7f8;
       padding: 16px 24px;
       background: #fff;
       color: var(--navy);
@@ -472,7 +473,7 @@
     }
 
     .sponsor-account {
-      margin-top: 18px;
+      margin: 0;
       padding: 16px 18px;
       border: 1px solid #d6e3f7;
       border-radius: 12px;
@@ -623,7 +624,7 @@
       .sponsor-list { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
       .sponsor-card { min-height: 0; padding: 13px 14px; border-radius: 10px; }
       .sponsor-card strong { font-size: 17px; }
-      .sponsor-account { margin-top: 14px; padding: 14px; border-radius: 10px; }
+      .sponsor-account { margin: 0; padding: 14px; border-radius: 10px 10px 0 0; }
       .sponsor-account strong { font-size: 16px; }
       .sponsor-account .account-number { font-size: 19px; }
       .sponsor-account span { font-size: 13px; }
@@ -775,16 +776,16 @@
 
 
     <section class="sponsor-section" id="sponsorSection" aria-label="후원자 리스트">
+      <div class="sponsor-account">
+        <strong>자발적 후원자를 찾습니다.</strong>
+        <span class="account-number">3333225178973 카카오뱅크</span>
+        <span>매니저 3명이 공동 관리합니다.</span>
+      </div>
       <button class="sponsor-toggle" id="sponsorToggle" type="button" aria-expanded="false" aria-controls="sponsorPanel">
         <span>후원자 리스트</span>
         <span aria-hidden="true">+</span>
       </button>
       <div class="sponsor-panel" id="sponsorPanel">
-        <div class="sponsor-account">
-          <strong>자발적 후원 계좌</strong>
-          <span class="account-number">3333225178973 카카오뱅크</span>
-          <span>매니저 3명이 공동 관리합니다.</span>
-        </div>
         <div class="sponsor-list" id="sponsorList"></div>
         <p class="sponsor-status" id="sponsorStatus">버튼을 누르면 후원자 리스트를 불러옵니다.</p>
       </div>
