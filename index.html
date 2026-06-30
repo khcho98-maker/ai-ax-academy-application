@@ -470,6 +470,37 @@
       letter-spacing: -0.02em;
       line-height: 1.35;
     }
+
+    .sponsor-account {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border: 1px solid #d6e3f7;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fbfdff, #f3f8ff);
+      color: var(--navy);
+    }
+    .sponsor-account strong {
+      display: block;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      margin-bottom: 7px;
+    }
+    .sponsor-account .account-number {
+      display: block;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: var(--blue);
+    }
+    .sponsor-account span {
+      display: block;
+      margin-top: 5px;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: -0.02em;
+    }
+
     .sponsor-status {
       margin: 18px 0 0;
       color: var(--muted);
@@ -592,6 +623,10 @@
       .sponsor-list { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
       .sponsor-card { min-height: 0; padding: 13px 14px; border-radius: 10px; }
       .sponsor-card strong { font-size: 17px; }
+      .sponsor-account { margin-top: 14px; padding: 14px; border-radius: 10px; }
+      .sponsor-account strong { font-size: 16px; }
+      .sponsor-account .account-number { font-size: 19px; }
+      .sponsor-account span { font-size: 13px; }
       .sponsor-status { font-size: 14px; margin-top: 14px; }
       .overview {
         margin-top: 18px;
@@ -745,6 +780,11 @@
         <span aria-hidden="true">+</span>
       </button>
       <div class="sponsor-panel" id="sponsorPanel">
+        <div class="sponsor-account">
+          <strong>자발적 후원 계좌</strong>
+          <span class="account-number">3333225178973 카카오뱅크</span>
+          <span>매니저 3명이 공동 관리합니다.</span>
+        </div>
         <div class="sponsor-list" id="sponsorList"></div>
         <p class="sponsor-status" id="sponsorStatus">버튼을 누르면 후원자 리스트를 불러옵니다.</p>
       </div>
@@ -811,9 +851,9 @@
       </div>
       <div class="program-row">
         <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 2 2.9 6 6.6.9-4.8 4.7 1.2 6.6L12 17l-5.9 3.2 1.2-6.6L2.5 8.9 9.1 8 12 2Z"/></svg></div></div>
-        <div class="name">정현회<small>카카오 개발자</small></div>
-        <div class="topic orange">Super Powers를<br>통한 AI 활용방안</div>
-        <div class="detail">업무 생산성을 높이는 AI 활용 전략과 실무 적용 사례를 통해 업무 효율 극대화</div>
+        <div class="name">정회현<small>카카오 개발자</small></div>
+        <div class="topic orange">명세주도개발<br>클로드 코드 실습</div>
+        <div class="detail">요구사항과 명세를 정리하고 Claude Code로 실제 구현까지 이어가는 명세주도개발 실습</div>
       </div>
       <div class="program-row">
         <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div></div>
