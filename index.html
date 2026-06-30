@@ -474,31 +474,79 @@
 
     .sponsor-account {
       margin: 0;
-      padding: 16px 18px;
-      border: 1px solid #d6e3f7;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #fbfdff, #f3f8ff);
+      padding: 20px 24px 22px;
+      border: 1px solid #c5d9ff;
+      border-radius: 16px 16px 0 0;
+      background: linear-gradient(135deg, #f8fbff 0%, #eef7ff 58%, #ecfffb 100%);
       color: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .sponsor-account::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--blue), var(--teal));
+    }
+    .sponsor-account .support-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(23,79,195,.1);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
     }
     .sponsor-account strong {
       display: block;
-      font-size: 17px;
+      font-size: 24px;
+      line-height: 1.25;
       font-weight: 900;
-      letter-spacing: -0.035em;
-      margin-bottom: 7px;
+      letter-spacing: -0.045em;
+      margin-bottom: 14px;
+    }
+    .sponsor-account .account-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid #b9cdf0;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(23,79,195,.08);
     }
     .sponsor-account .account-number {
       display: block;
-      font-size: 21px;
+      font-size: 24px;
       font-weight: 900;
-      letter-spacing: 0;
+      letter-spacing: .01em;
       color: var(--blue);
+      line-height: 1.15;
     }
-    .sponsor-account span {
+    .sponsor-account .bank-name {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: #ffe873;
+      color: #3a2c00;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .sponsor-account .support-note {
       display: block;
-      margin-top: 5px;
+      margin-top: 11px;
       font-size: 14px;
-      color: var(--muted);
+      color: #50607c;
+      font-weight: 800;
       letter-spacing: -0.02em;
     }
 
@@ -624,10 +672,13 @@
       .sponsor-list { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
       .sponsor-card { min-height: 0; padding: 13px 14px; border-radius: 10px; }
       .sponsor-card strong { font-size: 17px; }
-      .sponsor-account { margin: 0; padding: 14px; border-radius: 10px 10px 0 0; }
-      .sponsor-account strong { font-size: 16px; }
-      .sponsor-account .account-number { font-size: 19px; }
-      .sponsor-account span { font-size: 13px; }
+      .sponsor-account { padding: 16px; border-radius: 12px 12px 0 0; }
+      .sponsor-account .support-label { font-size: 12px; min-height: 24px; margin-bottom: 9px; }
+      .sponsor-account strong { font-size: 21px; }
+      .sponsor-account .account-box { display: block; padding: 13px 14px; }
+      .sponsor-account .account-number { font-size: 21px; }
+      .sponsor-account .bank-name { display: inline-block; margin-top: 8px; font-size: 14px; }
+      .sponsor-account .support-note { font-size: 13px; line-height: 1.45; }
       .sponsor-status { font-size: 14px; margin-top: 14px; }
       .overview {
         margin-top: 18px;
@@ -777,9 +828,13 @@
 
     <section class="sponsor-section" id="sponsorSection" aria-label="후원자 리스트">
       <div class="sponsor-account">
+        <span class="support-label">함께 만들는 아카데미</span>
         <strong>자발적 후원자를 찾습니다.</strong>
-        <span class="account-number">3333225178973 카카오뱅크</span>
-        <span>매니저 3명이 공동 관리합니다.</span>
+        <div class="account-box">
+          <span class="account-number">3333225178973</span>
+          <span class="bank-name">카카오뱅크</span>
+        </div>
+        <span class="support-note">매니저 3명이 공동 관리합니다.</span>
       </div>
       <button class="sponsor-toggle" id="sponsorToggle" type="button" aria-expanded="false" aria-controls="sponsorPanel">
         <span>후원자 리스트</span>
