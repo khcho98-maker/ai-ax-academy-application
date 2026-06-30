@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미지정 회계사를 위한 AI·AX 실무 아카데미</title>
+  <style>
+    :root {
+      --navy: #061b4f;
+      --blue: #174fc3;
+      --sky: #eaf3ff;
+      --line: #c8d9f5;
+      --text: #13213c;
+      --muted: #66738a;
+      --white: #ffffff;
+      --teal: #18a8b5;
+      --purple: #7455d6;
+      --orange: #ef7a1a;
+      --green: #18a16f;
+      --yellow: #ffd84d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #eef4ff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .page {
+      width: 1180px;
+      min-height: 1668px;
+      margin: 0 auto;
+      padding: 42px 44px 38px;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(23,79,195,.18) 0 11%, transparent 12%),
+        radial-gradient(circle at 97% 9%, rgba(23,79,195,.08) 0 10%, transparent 11%),
+        radial-gradient(circle at 98% 98%, rgba(23,79,195,.18) 0 9%, transparent 10%),
+        linear-gradient(180deg, #fff 0%, #f7fbff 100%);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #d9e6ff;
+    }
+
+    .dots {
+      position: absolute;
+      right: 62px;
+      top: 56px;
+      display: grid;
+      grid-template-columns: repeat(5, 8px);
+      gap: 14px;
+      opacity: .38;
+    }
+    .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--navy); display: block; }
+
+    .top-badge {
+      width: fit-content;
+      max-width: 780px;
+      margin: 0 auto 22px;
+      padding: 12px 34px;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(90deg, var(--navy), var(--blue));
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      box-shadow: 0 14px 32px rgba(6,27,79,.16);
+      text-align: center;
+    }
+
+    .spark { color: #dbe9ff; margin: 0 14px; }
+
+    header { text-align: center; position: relative; z-index: 1; }
+
+    h1 {
+      margin: 0;
+      font-size: 76px;
+      line-height: 1.1;
+      letter-spacing: -0.075em;
+      font-weight: 900;
+      color: #071a47;
+    }
+    h1 .accent {
+      display: block;
+      margin-top: 4px;
+      font-size: 96px;
+      color: var(--blue);
+      letter-spacing: -0.07em;
+    }
+
+    .subtitle {
+      margin: 20px auto 8px;
+      font-size: 29px;
+      color: #071a47;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+    }
+
+    .desc {
+      margin: 0 auto 24px;
+      max-width: 800px;
+      font-size: 20px;
+      color: #1f2b45;
+      letter-spacing: -0.04em;
+    }
+
+    .overview {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 2px solid var(--blue);
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 18px 36px rgba(17,58,130,.09);
+    }
+    .overview .item {
+      padding: 25px 12px 24px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+    .overview .item:last-child { border-right: 0; }
+    .icon {
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      background: linear-gradient(180deg, #edf5ff, #fff);
+      border: 1px solid #d5e4fb;
+      box-shadow: inset 0 -10px 18px rgba(23,79,195,.04);
+    }
+    .icon svg { width: 38px; height: 38px; stroke-width: 2.5; }
+    .overview strong {
+      display: block;
+      font-size: 25px;
+      color: var(--navy);
+      letter-spacing: -0.05em;
+      margin-bottom: 6px;
+    }
+    .overview span {
+      font-size: 20px;
+      letter-spacing: -0.045em;
+      color: #111d36;
+    }
+
+    .section {
+      margin-top: 24px;
+      border: 2px solid var(--navy);
+      border-radius: 20px;
+      background: rgba(255,255,255,.88);
+      overflow: hidden;
+      box-shadow: 0 16px 34px rgba(6,27,79,.08);
+    }
+    .section-title {
+      background: linear-gradient(90deg, var(--navy), #0b3f9d);
+      color: #fff;
+      font-size: 26px;
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: -0.045em;
+      padding: 12px 16px;
+    }
+
+    .program-row {
+      display: grid;
+      grid-template-columns: 92px 160px 265px 1fr;
+      align-items: center;
+      min-height: 100px;
+      border-bottom: 1px solid var(--line);
+    }
+    .program-row:last-child { border-bottom: 0; }
+    .program-row > div { padding: 14px 20px; }
+    .program-row .circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      margin-left: 18px;
+      box-shadow: 0 9px 22px rgba(0,0,0,.12);
+    }
+    .program-row:nth-child(2) .circle { background: var(--teal); }
+    .program-row:nth-child(3) .circle { background: var(--blue); }
+    .program-row:nth-child(4) .circle { background: var(--purple); }
+    .program-row:nth-child(5) .circle { background: var(--orange); }
+    .program-row:nth-child(6) .circle { background: var(--green); }
+    .program-row svg { width: 34px; height: 34px; stroke-width: 2.4; }
+    .name {
+      border-right: 1px solid var(--line);
+      font-size: 25px;
+      font-weight: 900;
+      color: #111c35;
+      letter-spacing: -0.05em;
+    }
+    .name small {
+      display: block;
+      margin-top: 4px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #44516a;
+    }
+    .topic {
+      border-right: 1px solid var(--line);
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--blue);
+      letter-spacing: -0.055em;
+      line-height: 1.25;
+    }
+    .topic.teal { color: var(--teal); }
+    .topic.purple { color: var(--purple); }
+    .topic.orange { color: #df5f00; }
+    .topic.green { color: var(--green); }
+    .detail {
+      font-size: 18px;
+      color: #1d2a45;
+      letter-spacing: -0.04em;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      margin-top: 24px;
+    }
+    .mini-section {
+      border: 2px solid var(--navy);
+      border-radius: 19px;
+      background: rgba(255,255,255,.9);
+      overflow: hidden;
+    }
+    .mini-section h2 {
+      margin: 0;
+      padding: 12px 14px;
+      background: linear-gradient(90deg, var(--navy), #0b3f9d);
+      color: #fff;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: -0.045em;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 20px 24px 22px;
+    }
+    li {
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 13px;
+      font-size: 18px;
+      color: #13213c;
+      letter-spacing: -0.04em;
+    }
+    li:last-child { margin-bottom: 0; }
+    li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .closing {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      overflow: hidden;
+      border-radius: 22px;
+      background: linear-gradient(90deg, var(--navy), #0b3f9d);
+      color: #fff;
+      box-shadow: 0 18px 40px rgba(6,27,79,.18);
+    }
+    .closing .left,
+    .closing .right { padding: 28px 34px; }
+    .closing .left {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 18px;
+      align-items: center;
+      border-right: 1px solid rgba(255,255,255,.25);
+    }
+    .closing .big-icon svg { width: 70px; height: 70px; }
+    .closing strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.28;
+      letter-spacing: -0.05em;
+    }
+    .closing strong span { color: var(--yellow); }
+    .closing .right {
+      font-size: 19px;
+      letter-spacing: -0.045em;
+      line-height: 1.55;
+      color: #eaf2ff;
+    }
+
+
+
+    .apply-section {
+      margin-top: 24px;
+      border: 2px solid var(--blue);
+      border-radius: 22px;
+      background: rgba(255,255,255,.94);
+      overflow: hidden;
+      box-shadow: 0 18px 38px rgba(23,79,195,.11);
+    }
+    .apply-head {
+      padding: 18px 24px;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .apply-head strong {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+    .apply-head span {
+      font-size: 17px;
+      color: #eaf8ff;
+      letter-spacing: -0.035em;
+    }
+    .apply-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr 190px;
+      gap: 14px;
+      padding: 22px 24px 24px;
+      align-items: end;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--navy);
+      letter-spacing: -0.04em;
+    }
+    .field input {
+      width: 100%;
+      height: 56px;
+      border: 1px solid #b9cceb;
+      border-radius: 12px;
+      padding: 0 16px;
+      font-size: 19px;
+      color: var(--text);
+      background: #fbfdff;
+      outline: none;
+    }
+    .field input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(23,79,195,.12);
+    }
+    .apply-button {
+      height: 56px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(6,27,79,.22);
+    }
+    .apply-button:hover { background: #0b2a72; }
+    .apply-button:disabled {
+      cursor: wait;
+      opacity: .72;
+      box-shadow: none;
+    }
+    .apply-message {
+      grid-column: 1 / -1;
+      min-height: 22px;
+      margin: -2px 0 0;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--muted);
+    }
+    .apply-message.success { color: var(--green); }
+    .apply-message.error { color: #d32f2f; }
+
+
+
+    .sponsor-section {
+      margin-top: 18px;
+      border: 1px solid #c7d8f4;
+      border-radius: 18px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 12px 28px rgba(17,58,130,.07);
+      overflow: hidden;
+    }
+    .sponsor-toggle {
+      width: 100%;
+      min-height: 58px;
+      border: 0;
+      padding: 16px 24px;
+      background: #fff;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      cursor: pointer;
+    }
+    .sponsor-toggle span:last-child {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--sky);
+      color: var(--blue);
+      font-size: 21px;
+      line-height: 1;
+    }
+    .sponsor-panel {
+      display: none;
+      padding: 0 24px 22px;
+      border-top: 1px solid #dce7f8;
+    }
+    .sponsor-section.open .sponsor-panel { display: block; }
+    .sponsor-section.open .sponsor-toggle span:last-child { transform: rotate(45deg); }
+    .sponsor-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .sponsor-card {
+      min-height: 76px;
+      padding: 15px 16px;
+      border: 1px solid #d6e3f7;
+      border-radius: 12px;
+      background: #fbfdff;
+    }
+    .sponsor-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 18px;
+      letter-spacing: -0.035em;
+      line-height: 1.25;
+    }
+    .sponsor-card span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+    }
+    .sponsor-status {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .print-note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1180px) {
+      .page { width: 100%; min-height: auto; padding: 32px 22px; }
+      h1 { font-size: 48px; }
+      h1 .accent { font-size: 58px; }
+      .overview { grid-template-columns: 1fr; }
+      .overview .item { border-right: 0; border-bottom: 1px solid var(--line); }
+      .overview .item:last-child { border-bottom: 0; }
+      .program-row { grid-template-columns: 78px 1fr; gap: 0; padding: 16px 0; }
+      .program-row > div { padding: 8px 14px; }
+      .name, .topic { border-right: 0; }
+      .topic, .detail { grid-column: 2; }
+      .bottom-grid, .closing { grid-template-columns: 1fr; }
+      .apply-head { display: block; }
+      .apply-head span { display: block; margin-top: 6px; }
+      .apply-form { grid-template-columns: 1fr; }
+      .closing .left { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.25); }
+    }
+
+
+
+    @media (max-width: 720px) {
+      body { background: #f4f7fb; }
+      .page {
+        width: 100%;
+        padding: 18px 14px 24px;
+        border: 0;
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      }
+      .dots { display: none; }
+      .top-badge {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 16px;
+        padding: 9px 12px;
+        font-size: 14px;
+        line-height: 1.35;
+        border-radius: 12px;
+        letter-spacing: -0.015em;
+        white-space: normal;
+      }
+      .spark { margin: 0 6px; }
+      h1 {
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 32px;
+        line-height: 1.16;
+        letter-spacing: -0.045em;
+        word-break: keep-all;
+        overflow-wrap: normal;
+      }
+      h1 .accent {
+        max-width: 100%;
+        margin-top: 6px;
+        font-size: 32px;
+        line-height: 1.14;
+        letter-spacing: -0.04em;
+        word-break: keep-all;
+      }
+      .subtitle {
+        max-width: 330px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 14px;
+        font-size: 18px;
+        line-height: 1.4;
+        letter-spacing: -0.02em;
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+      .desc {
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 18px;
+        font-size: 15px;
+        line-height: 1.62;
+        letter-spacing: -0.02em;
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+      .apply-section,
+      .overview,
+      .section,
+      .mini-section,
+      .closing {
+        border-radius: 14px;
+        box-shadow: 0 10px 24px rgba(17,58,130,.08);
+      }
+      .apply-section { margin-top: 18px; border-color: #b9d1ff; }
+      .apply-head {
+        padding: 14px 16px;
+        display: block;
+      }
+      .apply-head strong { font-size: 22px; letter-spacing: -0.04em; }
+      .apply-form { padding: 16px; gap: 12px; grid-template-columns: 1fr; }
+      .field label { font-size: 15px; margin-bottom: 6px; }
+      .field input { height: 48px; border-radius: 10px; font-size: 16px; }
+      .apply-button { height: 50px; border-radius: 10px; font-size: 18px; }
+      .apply-message { font-size: 14px; min-height: 20px; }
+      .sponsor-section { margin-top: 14px; border-radius: 14px; }
+      .sponsor-toggle { min-height: 52px; padding: 14px 16px; font-size: 19px; }
+      .sponsor-panel { padding: 0 16px 16px; }
+      .sponsor-list { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+      .sponsor-card { min-height: 0; padding: 13px 14px; border-radius: 10px; }
+      .sponsor-card strong { font-size: 17px; }
+      .sponsor-status { font-size: 14px; margin-top: 14px; }
+      .overview {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-radius: 14px;
+      }
+      .overview .item {
+        min-height: 132px;
+        padding: 16px 10px 14px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .overview .item:nth-child(2n) { border-right: 0; }
+      .overview .item:last-child {
+        grid-column: 1 / -1;
+        min-height: auto;
+        border-bottom: 0;
+      }
+      .icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 9px;
+        border-radius: 13px;
+      }
+      .icon svg { width: 28px; height: 28px; }
+      .overview strong { font-size: 18px; margin-bottom: 4px; letter-spacing: -0.04em; }
+      .overview span { font-size: 15px; line-height: 1.35; letter-spacing: -0.03em; }
+      .section { margin-top: 18px; border-width: 1px; }
+      .section-title,
+      .mini-section h2 {
+        padding: 11px 14px;
+        font-size: 20px;
+        line-height: 1.3;
+      }
+      .program-row {
+        grid-template-columns: 52px 1fr;
+        align-items: start;
+        min-height: 0;
+        padding: 16px 14px;
+        row-gap: 4px;
+      }
+      .program-row > div { padding: 0; }
+      .program-row .circle {
+        width: 42px;
+        height: 42px;
+        margin: 2px 0 0;
+        border-radius: 13px;
+      }
+      .program-row svg { width: 24px; height: 24px; }
+      .name {
+        border-right: 0;
+        font-size: 21px;
+        line-height: 1.1;
+        letter-spacing: -0.045em;
+      }
+      .name small { font-size: 13px; margin-top: 5px; letter-spacing: -0.025em; }
+      .topic {
+        grid-column: 2;
+        border-right: 0;
+        margin-top: 8px;
+        font-size: 20px;
+        line-height: 1.25;
+        letter-spacing: -0.045em;
+      }
+      .detail {
+        grid-column: 2;
+        margin-top: 7px;
+        font-size: 15px;
+        line-height: 1.55;
+        letter-spacing: -0.025em;
+      }
+      .bottom-grid { margin-top: 18px; gap: 18px; }
+      ul { padding: 16px 16px 18px; }
+      li {
+        padding-left: 30px;
+        margin-bottom: 11px;
+        font-size: 15px;
+        line-height: 1.5;
+        letter-spacing: -0.025em;
+      }
+      li::before { width: 21px; height: 21px; font-size: 13px; }
+      .closing { margin-top: 18px; border-radius: 14px; }
+      .closing .left,
+      .closing .right { padding: 20px 18px; }
+      .closing .left { grid-template-columns: 46px 1fr; gap: 12px; }
+      .closing .big-icon svg { width: 44px; height: 44px; }
+      .closing strong { font-size: 20px; line-height: 1.35; letter-spacing: -0.04em; }
+      .closing .right { font-size: 15px; line-height: 1.6; letter-spacing: -0.025em; }
+      .print-note { font-size: 12px; margin-top: 14px; }
+    }
+
+    @media (max-width: 390px) {
+      .page { padding-left: 12px; padding-right: 12px; }
+      h1 { font-size: 28px; }
+      h1 .accent { font-size: 30px; }
+      .subtitle { font-size: 17px; }
+      .program-row { grid-template-columns: 46px 1fr; padding: 14px 12px; }
+      .program-row .circle { width: 38px; height: 38px; }
+      .name { font-size: 19px; }
+      .topic { font-size: 18px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; min-height: 100vh; margin: 0; border: 0; }
+      .print-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="dots" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i>
+    </div>
+
+    <header>
+      <div class="top-badge"><span class="spark">✦</span>미지정 기간을 AI 실무 역량으로 바꾸는 시간!<span class="spark">✦</span></div>
+      <h1>미지정 회계사를 위한 <span class="accent">AI·AX 실무 아카데미</span></h1>
+      <p class="subtitle">회계법인부터 회사 공채까지, 실무에 바로 쓰는 AI 기초 역량 완성</p>
+      <p class="desc">회계법인 업무는 물론, 일반 기업 취업과 회사생활까지 준비할 수 있도록 실습 중심의 AI 활용 능력을 기초부터 체계적으로 학습하는 교육 프로그램입니다.</p>
+    </header>
+
+
+
+    <section class="apply-section" aria-label="아카데미 신청">
+      <div class="apply-head">
+        <strong>아카데미 신청하기</strong>
+      </div>
+      <form class="apply-form" id="applyForm">
+        <div class="field">
+          <label for="name">이름</label>
+          <input id="name" name="name" type="text" autocomplete="name" required placeholder="홍길동" />
+        </div>
+        <div class="field">
+          <label for="email">이메일</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@example.com" />
+        </div>
+        <button class="apply-button" type="submit">신청하기</button>
+        <p class="apply-message" id="applyMessage" aria-live="polite"></p>
+      </form>
+    </section>
+
+
+    <section class="sponsor-section" id="sponsorSection" aria-label="후원자 리스트">
+      <button class="sponsor-toggle" id="sponsorToggle" type="button" aria-expanded="false" aria-controls="sponsorPanel">
+        <span>후원자 리스트</span>
+        <span aria-hidden="true">+</span>
+      </button>
+      <div class="sponsor-panel" id="sponsorPanel">
+        <div class="sponsor-list" id="sponsorList"></div>
+        <p class="sponsor-status" id="sponsorStatus">버튼을 누르면 후원자 리스트를 불러옵니다.</p>
+      </div>
+    </section>
+
+
+    <section class="overview" aria-label="교육 개요">
+      <div class="item">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <strong>일정</strong>
+        <span>2026년 7월 11일부터<br>주 1회</span>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <strong>장소</strong>
+        <span>서울대학교<br>강의실</span>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg>
+        </div>
+        <strong>교육 프로그램</strong>
+        <span>Claude Code<br>사용</span>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <strong>대상</strong>
+        <span>미지정<br>공인회계사</span>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+        </div>
+        <strong>방식</strong>
+        <span>실습 중심<br>오프라인 교육</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">주요 교육 프로그램 & 강사진</div>
+      <div class="program-row">
+        <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 5-7"/><path d="M18 7v5h-5"/></svg></div></div>
+        <div class="name">조경호<small>회계사</small></div>
+        <div class="topic teal">AI를 활용한<br>재무데이터 활용</div>
+        <div class="detail">재무자료 정리, 분석, 보고서 작성까지 AI를 활용한 효율적인 재무데이터 활용법 실습</div>
+      </div>
+      <div class="program-row">
+        <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M8 12l2 2 4-5 2 3"/></svg></div></div>
+        <div class="name">이준호<small>회계사</small></div>
+        <div class="topic">PPT 자동화<br>구축 실습</div>
+        <div class="detail">보고자료, 제안서, 발표자료 자동화 실습을 통해 효율적이고 설득력 있는 PPT 제작 역량 강화</div>
+      </div>
+      <div class="program-row">
+        <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="8" width="12" height="10" rx="2"/><path d="M12 2v4M8 12h.01M16 12h.01M9 18v3M15 18v3M3 13h3M18 13h3"/></svg></div></div>
+        <div class="name">이강준<small>AI 게임개발자</small></div>
+        <div class="topic purple">AI 에이전트 구축<br>및 실습</div>
+        <div class="detail">반복 업무를 수행하는 AI 에이전트의 개념 이해와 실제 구축 및 활용 실습</div>
+      </div>
+      <div class="program-row">
+        <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 2 2.9 6 6.6.9-4.8 4.7 1.2 6.6L12 17l-5.9 3.2 1.2-6.6L2.5 8.9 9.1 8 12 2Z"/></svg></div></div>
+        <div class="name">정현회<small>카카오 개발자</small></div>
+        <div class="topic orange">Super Powers를<br>통한 AI 활용방안</div>
+        <div class="detail">업무 생산성을 높이는 AI 활용 전략과 실무 적용 사례를 통해 업무 효율 극대화</div>
+      </div>
+      <div class="program-row">
+        <div><div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div></div>
+        <div class="name">김풍호<small>CNS 개발자</small></div>
+        <div class="topic green">Wiki를 활용한<br>AI 문서 자동화</div>
+        <div class="detail">지식관리, 문서화, 업무 매뉴얼 자동화를 통해 체계적인 문서 관리와 협업 환경 구축</div>
+      </div>
+    </section>
+
+    <div class="bottom-grid">
+      <section class="mini-section">
+        <h2>이 과정을 통해 얻을 수 있는 것</h2>
+        <ul>
+          <li>회계법인 입사 전 AI 실무 기초 역량 확보</li>
+          <li>회사 공채 및 일반 기업 업무에 필요한 AI 활용능력 습득</li>
+          <li>재무데이터, 보고서, PPT, 문서 자동화 실습 경험</li>
+          <li>AI 에이전트와 Claude Code를 활용한 업무 자동화 구조 이해</li>
+          <li>이력서·자기소개서·면접에서 AI 활용 경험을 자신 있게 설명</li>
+        </ul>
+      </section>
+
+      <section class="mini-section">
+        <h2>이런 분께 추천합니다</h2>
+        <ul>
+          <li>회계법인 입사 전 AI 활용 역량을 준비하고 싶은 미지정 회계사</li>
+          <li>회사 공채나 일반 기업 취업을 함께 준비하고 있는 회계사</li>
+          <li>ChatGPT는 써봤지만 실무에 어떻게 연결할지 막막한 분</li>
+          <li>재무자료, 보고서, PPT, 문서 업무를 더 효율적으로 처리하고 싶은 분</li>
+          <li>AI 시대에 본인의 경쟁력을 만들고 싶은 분</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="closing">
+      <div class="left">
+        <div class="big-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21h18"/><path d="M5 17l4-4 4 3 6-8"/><path d="M17 8h2v2"/><path d="M6 21V10M12 21v-6M18 21V8"/></svg>
+        </div>
+        <strong>미지정 기간은 기다리는 시간이 아니라,<br><span>AI 실무 역량을 준비하는 시간입니다.</span></strong>
+      </div>
+      <div class="right">
+        이번 아카데미는 회계사로서의 전문성을 바탕으로 AI를 활용해 더 빠르게 정리하고, 더 명확하게 분석하고, 더 설득력 있게 보고하는 방법을 함께 훈련합니다.
+      </div>
+    </section>
+
+    <div class="print-note">AI·AX Practical Academy for Unassigned CPAs</div>
+  </main>
+
+
+  <script>
+    const applyForm = document.getElementById("applyForm");
+    const applyMessage = document.getElementById("applyMessage");
+    const applyButton = applyForm ? applyForm.querySelector("button") : null;
+
+
+
+    const sponsorSection = document.getElementById("sponsorSection");
+    const sponsorToggle = document.getElementById("sponsorToggle");
+    const sponsorList = document.getElementById("sponsorList");
+    const sponsorStatus = document.getElementById("sponsorStatus");
+    let sponsorsLoaded = false;
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        "\"": "&quot;"
+      }[char]));
+    }
+
+    function renderSponsors(items) {
+      sponsorList.innerHTML = items.map((item) => `
+        <div class="sponsor-card">
+          <strong>${escapeHtml(item.name)}</strong>
+          ${item.amount ? `<span>${escapeHtml(item.amount)}</span>` : (item.note ? `<span>${escapeHtml(item.note)}</span>` : "")}
+        </div>
+      `).join("");
+    }
+
+    sponsorToggle.addEventListener("click", async () => {
+      const isOpen = sponsorSection.classList.toggle("open");
+      sponsorToggle.setAttribute("aria-expanded", String(isOpen));
+      if (!isOpen || sponsorsLoaded) return;
+
+      sponsorStatus.textContent = "후원자 리스트를 불러오는 중입니다.";
+      try {
+        const response = await fetch("/api/sponsors");
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.error || "후원자 리스트를 불러오지 못했습니다.");
+        if (!result.sponsors.length) {
+          sponsorStatus.textContent = "후원자 리스트가 준비되는 중입니다.";
+          return;
+        }
+        renderSponsors(result.sponsors);
+        sponsorStatus.textContent = "";
+        sponsorsLoaded = true;
+      } catch (error) {
+        sponsorStatus.textContent = error.message || "후원자 리스트가 준비되는 중입니다.";
+      }
+    });
+
+
+    if (applyForm) applyForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      applyMessage.className = "apply-message";
+      applyMessage.textContent = "";
+
+      const payload = {
+        name: applyForm.name.value.trim(),
+        email: applyForm.email.value.trim()
+      };
+
+      if (!payload.name || !payload.email) {
+        applyMessage.className = "apply-message error";
+        applyMessage.textContent = "이름과 이메일을 모두 입력해 주세요.";
+        return;
+      }
+
+      applyButton.disabled = true;
+      applyButton.textContent = "신청 중";
+
+      try {
+        const response = await fetch("/api/apply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || "신청 저장에 실패했습니다.");
+        }
+
+        applyForm.reset();
+        applyMessage.className = "apply-message success";
+        applyMessage.textContent = "신청이 완료되었습니다. 곧 안내드리겠습니다.";
+      } catch (error) {
+        applyMessage.className = "apply-message error";
+        applyMessage.textContent = error.message || "잠시 후 다시 신청해 주세요.";
+      } finally {
+        applyButton.disabled = false;
+        applyButton.textContent = "신청하기";
+      }
+    });
+  </script>
+</body>
+</html>
