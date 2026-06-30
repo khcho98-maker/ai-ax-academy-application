@@ -531,6 +531,13 @@
       color: var(--blue);
       line-height: 1.15;
     }
+    .sponsor-account .account-meta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
     .sponsor-account .bank-name {
       flex: 0 0 auto;
       padding: 7px 10px;
@@ -544,7 +551,6 @@
     .sponsor-account .account-owner {
       display: inline-flex;
       align-items: center;
-      margin-top: 10px;
       padding: 7px 11px;
       border-radius: 999px;
       background: rgba(23,79,195,.08);
@@ -689,7 +695,9 @@
       .sponsor-account strong { font-size: 21px; }
       .sponsor-account .account-box { display: block; padding: 13px 14px; }
       .sponsor-account .account-number { font-size: 21px; }
-      .sponsor-account .bank-name { display: inline-block; margin-top: 8px; font-size: 14px; }
+      .sponsor-account .account-meta { justify-content: flex-start; margin-top: 9px; }
+      .sponsor-account .bank-name { display: inline-block; font-size: 14px; }
+      .sponsor-account .account-owner { font-size: 13px; padding: 7px 10px; }
       .sponsor-account .support-note { font-size: 13px; line-height: 1.45; }
       .sponsor-status { font-size: 14px; margin-top: 14px; }
       .overview {
@@ -844,9 +852,11 @@
         <strong>자발적 후원자를 찾습니다.</strong>
         <div class="account-box">
           <span class="account-number">3333-22-5178973</span>
-          <span class="bank-name">카카오뱅크</span>
+          <span class="account-meta">
+            <span class="bank-name">카카오뱅크</span>
+            <span class="account-owner">예금주: AI교육통장</span>
+          </span>
         </div>
-        <span class="account-owner">예금주: AI교육통장</span>
         <span class="support-note">매니저 3명이 공동 관리합니다.</span>
       </div>
       <button class="sponsor-toggle" id="sponsorToggle" type="button" aria-expanded="false" aria-controls="sponsorPanel">
