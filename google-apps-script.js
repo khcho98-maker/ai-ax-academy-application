@@ -21,7 +21,7 @@ function doPost(e) {
       sheet.appendRow(["\uc2e0\uccad\uc77c\uc2dc", "\uc774\ub984", "\uc774\uba54\uc77c", "\uc720\uc785\uacbd\ub85c"]);
     }
 
-    sheet.appendRow([submittedAt, name, email, source]);
+    sheet.appendRow([submittedAt, sanitizeCell(name), sanitizeCell(email), sanitizeCell(source)]);
     return jsonResponse({ ok: true });
   } catch (error) {
     return jsonResponse({ ok: false, error: error.message });
@@ -39,7 +39,9 @@ function doGet(e) {
     if (!sheet) return jsonResponse({ ok: false, error: "Sponsor sheet was not found." });
 
     const values = sheet.getDataRange().getDisplayValues();
-    const sponsors = values.slice(1)
+    // 첫 행이 헤더일 때만 제거 — 헤더 없는 시트에서 첫 후원자가 사라지던 문제 방지
+    const hasHeader = values.length > 0 && /name|이름|후원/i.test(String(values[0][0] || ""));
+    const sponsors = (hasHeader ? values.slice(1) : values)
       .map(function(row) {
         return { name: String(row[0] || "").trim(), amount: String(row[1] || "").trim() };
       })
@@ -58,6 +60,11 @@ function getSheetById(sheetId) {
     if (sheets[index].getSheetId() === sheetId) return sheets[index];
   }
   return null;
+}
+
+// 스프레드시트 수식 인젝션 방지: 수식 트리거 문자로 시작하면 작은따옴표로 무력화
+function sanitizeCell(value) {
+  return /^[=+\-@\t\r]/.test(String(value)) ? "'" + value : value;
 }
 
 function jsonResponse(payload) {

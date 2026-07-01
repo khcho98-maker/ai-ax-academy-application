@@ -46,9 +46,10 @@ function sponsorsFromRows(rows) {
 }
 
 export default async function handler(request, response) {
+  // 후원자 추가/삭제가 하루씩 지연되던 문제를 줄이기 위해 CDN 캐시를 5분으로 단축
   response.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
-  response.setHeader("CDN-Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
-  response.setHeader("Vercel-CDN-Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
+  response.setHeader("CDN-Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
+  response.setHeader("Vercel-CDN-Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
   if (request.method !== "GET") {
     response.setHeader("Allow", "GET");
@@ -60,7 +61,7 @@ export default async function handler(request, response) {
 
   try {
     if (csvUrl) {
-      const csvResponse = await fetch(csvUrl);
+      const csvResponse = await fetch(csvUrl, { signal: AbortSignal.timeout(8000) });
       if (!csvResponse.ok) throw new Error("CSV fetch failed");
       return response.status(200).json({ ok: true, sponsors: sponsorsFromRows(parseCsv(await csvResponse.text())) });
     }
@@ -71,17 +72,21 @@ export default async function handler(request, response) {
 
     const url = new URL(scriptUrl);
     url.searchParams.set("action", "sponsors");
-    const scriptResponse = await fetch(url.toString());
+    const scriptResponse = await fetch(url.toString(), { signal: AbortSignal.timeout(8000) });
     const result = await scriptResponse.json();
 
     if (!scriptResponse.ok || !result.ok) {
+      // \uc7a5\uc560\ub97c \ube48 \ubaa9\ub85d\uc73c\ub85c \uac10\ucd94\ub418, \uc6b4\uc601\uc790\uac00 Vercel \ub85c\uadf8\uc5d0\uc11c \uad6c\ubd84\ud560 \uc218 \uc788\uac8c \uae30\ub85d
+      console.error("sponsors: backend returned failure", { status: scriptResponse.status, ok: result && result.ok });
       return response.status(200).json({ ok: true, sponsors: [] });
     }
 
     return response.status(200).json({ ok: true, sponsors: result.sponsors || [] });
   } catch (error) {
+    console.error("sponsors: fetch failed", error && error.name, error && error.message);
     if (csvUrl) {
-      return response.status(502).json({ ok: false, error: "\ud6c4\uc6d0\uc790 \ub9ac\uc2a4\ud2b8\ub97c \ubd88\ub7ec\uc624\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4." });
+      // sponsors \ud544\ub4dc\ub97c \ud568\uaed8 \ubc18\ud658\ud574 \ud504\ub860\ud2b8\uc5d4\ub4dc\uc758 undefined.length \ud06c\ub798\uc2dc\ub97c \ubc29\uc9c0
+      return response.status(502).json({ ok: false, sponsors: [], error: "\ud6c4\uc6d0\uc790 \ub9ac\uc2a4\ud2b8\ub97c \ubd88\ub7ec\uc624\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4." });
     }
     return response.status(200).json({ ok: true, sponsors: [] });
   }
