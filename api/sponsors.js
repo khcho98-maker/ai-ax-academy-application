@@ -46,10 +46,10 @@ function sponsorsFromRows(rows) {
 }
 
 export default async function handler(request, response) {
-  // Disable browser/CDN cache so sponsor sheet changes show up immediately.
-  response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
-  response.setHeader("CDN-Cache-Control", "no-store");
-  response.setHeader("Vercel-CDN-Cache-Control", "no-store");
+  // Batch-like sponsor refresh: cache sponsor sheet reads for one day on Vercel CDN.
+  response.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  response.setHeader("CDN-Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
+  response.setHeader("Vercel-CDN-Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
 
   if (request.method !== "GET") {
     response.setHeader("Allow", "GET");
